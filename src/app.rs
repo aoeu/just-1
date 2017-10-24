@@ -8,14 +8,6 @@ use std::collections::BTreeMap;
 use self::clap::{App, Arg, ArgGroup, AppSettings};
 use super::{Slurp, RunOptions, compile, DEFAULT_SHELL, maybe_s};
 
-macro_rules! die {
-  ($($arg:tt)*) => {{
-    extern crate std;
-    eprintln!($($arg)*);
-    process::exit(EXIT_FAILURE)
-  }};
-}
-
 fn edit<P: convert::AsRef<ffi::OsStr>>(path: P) -> ! {
   let editor = env::var_os("EDITOR")
     .unwrap_or_else(|| die!("Error getting EDITOR environment variable"));

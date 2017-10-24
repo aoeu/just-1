@@ -9,6 +9,23 @@ extern crate edit_distance;
 extern crate libc;
 extern crate brev;
 
+macro_rules! eprintln {
+  ($($arg:tt)*) => {{
+    extern crate std;
+    use std::io::prelude::*;
+    let _ = writeln!(&mut std::io::stderr(), $($arg)*);
+  }};
+}
+
+macro_rules! die {
+  ($($arg:tt)*) => {{
+    extern crate std;
+    eprintln!($($arg)*);
+    process::exit(EXIT_FAILURE)
+  }};
+}
+
+
 #[cfg(test)]
 mod test_utils;
 
@@ -52,14 +69,6 @@ use std::fmt::Display;
 use std::ops::Range;
 
 const DEFAULT_SHELL: &'static str = "sh";
-
-macro_rules! eprintln {
-  ($($arg:tt)*) => {{
-    extern crate std;
-    use std::io::prelude::*;
-    let _ = writeln!(&mut std::io::stderr(), $($arg)*);
-  }};
-}
 
 trait Slurp {
   fn slurp(&mut self) -> Result<String, std::io::Error>;
