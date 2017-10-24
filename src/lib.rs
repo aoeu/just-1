@@ -449,7 +449,9 @@ impl<'a> Recipe<'a> {
           continue;
         }
 
-        let mut cmd = process::Command::new(options.shell.unwrap_or(DEFAULT_SHELL));
+        let mut cmd = process::Command::new("/usr/bin/env");
+
+        cmd.arg(options.shell.unwrap_or(DEFAULT_SHELL));
 
         cmd.arg("-cu").arg(command);
 
